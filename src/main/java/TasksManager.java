@@ -42,11 +42,11 @@ public class TasksManager {
                     break;
                 }
                 case "list": {
-                    showTasks(tasks);
+                    showTasks();
                     break;
                 }
                 case "exit": {
-                    saveDataToFile(tasks, "tasks.csv");
+                    saveDataToFile("tasks.csv");
                     programWorking = false;
                     break;
                 }
@@ -84,45 +84,39 @@ public class TasksManager {
     }
 
 
-    public static void showTasks(String[][] arr) {
-        for (int i = 0; i < arr.length; i++) {
+    public static void showTasks() {
+        for (int i = 0; i < tasks.length; i++) {
             System.out.print(i + ":");
-            for (int j = 0; j < arr[i].length; j++) {
-                System.out.print(arr[i][j]);
+            for (int j = 0; j < tasks[i].length; j++) {
+                System.out.print(tasks[i][j]);
             }
             System.out.println();
         }
     }
 
     public static void addTask() {
-        String addInput = "";
         Scanner scan = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE + "Please add task description" + ConsoleColors.RESET);
         String desc = scan.nextLine() + ",";
-        addInput += desc;
         System.out.println(ConsoleColors.BLUE + "Please add a date to do a task" + ConsoleColors.RESET);
         String dateOfTask = scan.nextLine() + ",";
-        addInput += dateOfTask;
         System.out.println(ConsoleColors.BLUE + "Is task important? true/false" + ConsoleColors.RESET);
         String isImportant;
         do {
             System.out.println(ConsoleColors.BLUE + "Allowed only true/false (only small case)" + ConsoleColors.RESET);
             isImportant = scan.nextLine();
         } while (!isImportant.equals("true") && !isImportant.equals("false"));
-        addInput += isImportant;
-
-        String[] dataToTab = addInput.split(",");
         String[][] newArr = Arrays.copyOf(tasks, tasks.length + 1);
         newArr[newArr.length - 1] = new String[3];
-        newArr[newArr.length - 1][0] = dataToTab[0] + " ";
-        newArr[newArr.length - 1][1] = dataToTab[1] + " ";
-        newArr[newArr.length - 1][2] = dataToTab[2];
+        newArr[newArr.length - 1][0] = desc + " ";
+        newArr[newArr.length - 1][1] = dateOfTask + " ";
+        newArr[newArr.length - 1][2] = isImportant;
         tasks = newArr;
 
     }
 
     public static String[][] removeTask(String[][] arr) {
-        showTasks(arr);
+        showTasks();
         Scanner scan = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE + "Number of index to remove?" + ConsoleColors.RESET);
         while (!scan.hasNextInt()) {
@@ -134,19 +128,16 @@ public class TasksManager {
             System.out.println(ConsoleColors.BLUE + "Incorrect number of index" + ConsoleColors.RESET);
             index = scan.nextInt();
         }
-        boolean dec = false;
-        while (!dec) {
+        boolean decisionYesOrNot = false;
+        while (!decisionYesOrNot) {
             String decision = scan.nextLine();
             switch (decision) {
-
                 case "y" -> {
                     tasks = ArrayUtils.remove(tasks, index);
-                    dec = true;
-
+                    decisionYesOrNot = true;
                 }
                 case "n" -> {
-                    dec = true;
-
+                    decisionYesOrNot = true;
                 }
                 default -> System.out.println(ConsoleColors.BLUE + "Only y/n allowed to continue." + ConsoleColors.RESET);
             }
@@ -155,11 +146,11 @@ public class TasksManager {
         return arr;
     }
 
-    public static void saveDataToFile(String[][] arr, String fileName) {
+    public static void saveDataToFile(String fileName) {
         Path path = Paths.get(fileName);
         String[] tabRow = new String[tasks.length];
-        for (int i = 0; i < arr.length; i++) {
-            tabRow[i] = String.join(",", arr[i]);
+        for (int i = 0; i < tasks.length; i++) {
+            tabRow[i] = String.join(",", tasks[i]);
         }
         try {
             Files.write(path, Arrays.asList(tabRow));
