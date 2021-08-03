@@ -1,7 +1,7 @@
 # MyFirstProjectWork
 
-Its a simply program to 
+Its a simply implementation to 
 add/remove/show/save to 
 file tasks. After end of 
-program he will save data 
+program it will save data 
 to csv format file.
