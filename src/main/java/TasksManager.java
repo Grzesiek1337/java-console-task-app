@@ -31,14 +31,14 @@ public class TasksManager {
             System.out.println("remove");
             System.out.println("list");
             System.out.println("exit");
-            String choosedoption = optionInput.nextLine();
-            switch (choosedoption) {
+            String choosedOption = optionInput.nextLine();
+            switch (choosedOption) {
                 case "add": {
                     addTask();
                     break;
                 }
                 case "remove": {
-                    removeTask(tasks);
+                    removeTask();
                     break;
                 }
                 case "list": {
@@ -84,7 +84,7 @@ public class TasksManager {
     }
 
 
-    public static void showTasks() {
+    private static void showTasks() {
         for (int i = 0; i < tasks.length; i++) {
             System.out.print(i + ":");
             for (int j = 0; j < tasks[i].length; j++) {
@@ -94,7 +94,7 @@ public class TasksManager {
         }
     }
 
-    public static void addTask() {
+    private static void addTask() {
         Scanner scan = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE + "Please add task description" + ConsoleColors.RESET);
         String desc = scan.nextLine() + ",";
@@ -115,7 +115,7 @@ public class TasksManager {
 
     }
 
-    public static String[][] removeTask(String[][] arr) {
+    private static String[][] removeTask() {
         showTasks();
         Scanner scan = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE + "Number of index to remove?" + ConsoleColors.RESET);
@@ -124,7 +124,7 @@ public class TasksManager {
             System.out.println(ConsoleColors.BLUE + "Incorrect index" + ConsoleColors.RESET);
         }
         int index = scan.nextInt();
-        while ((index < 0 || index > arr.length - 1)) {
+        while ((index < 0 || index > tasks.length - 1)) {
             System.out.println(ConsoleColors.BLUE + "Incorrect number of index" + ConsoleColors.RESET);
             index = scan.nextInt();
         }
@@ -136,17 +136,15 @@ public class TasksManager {
                     tasks = ArrayUtils.remove(tasks, index);
                     decisionYesOrNot = true;
                 }
-                case "n" -> {
-                    decisionYesOrNot = true;
-                }
+                case "n" -> decisionYesOrNot = true;
                 default -> System.out.println(ConsoleColors.BLUE + "Only y/n allowed to continue." + ConsoleColors.RESET);
             }
             System.out.println(ConsoleColors.BLUE + "Are u sure to remove task from index " + index + "? y/n" + ConsoleColors.RESET);
         }
-        return arr;
+        return tasks;
     }
 
-    public static void saveDataToFile(String fileName) {
+    private static void saveDataToFile(String fileName) {
         Path path = Paths.get(fileName);
         String[] tabRow = new String[tasks.length];
         for (int i = 0; i < tasks.length; i++) {
