@@ -17,10 +17,7 @@ public class TasksManager {
     public static void main(String[] args) {
         tasks = getDataFromFile("tasks.csv");
         menuOptions();
-
-
     }
-
 
     public static void menuOptions() {
         Scanner optionInput = new Scanner(System.in);
@@ -33,25 +30,14 @@ public class TasksManager {
             System.out.println("exit");
             String choosedOption = optionInput.nextLine();
             switch (choosedOption) {
-                case "add": {
-                    addTask();
-                    break;
-                }
-                case "remove": {
-                    removeTask();
-                    break;
-                }
-                case "list": {
-                    showTasks();
-                    break;
-                }
-                case "exit": {
+                case "add" -> addTask();
+                case "remove" -> removeTask();
+                case "list" -> showTasks();
+                case "exit" -> {
                     saveDataToFile("tasks.csv");
                     programWorking = false;
-                    break;
                 }
-                default:
-                    System.out.println(ConsoleColors.BLUE + "Please select a correct option." + ConsoleColors.RESET);
+                default -> System.out.println(ConsoleColors.BLUE + "Please select a correct option." + ConsoleColors.RESET);
             }
         }
     }
