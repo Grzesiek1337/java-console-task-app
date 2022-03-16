@@ -1,5 +1,5 @@
-# MyFirstProjectWork
-Basic java application for store tasks
+# console-task
+Basic java console application for store tasks
 Available content:
 -add task
 -remove task
